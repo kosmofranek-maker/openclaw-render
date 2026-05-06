@@ -28,10 +28,13 @@ cat > "${OPENCLAW_STATE_DIR}/openclaw.json" <<EOF
 }
 EOF
 
-echo "=== Generated openclaw.json ==="
-cat "${OPENCLAW_STATE_DIR}/openclaw.json"
-echo "==============================="
+echo "=== Generated openclaw.json (token redacted) ==="
+sed 's/"botToken": *"[^"]*"/"botToken": "***REDACTED***"/' "${OPENCLAW_STATE_DIR}/openclaw.json"
+echo "==============================================="
 echo "RENDER_EXTERNAL_URL=${RENDER_EXTERNAL_URL}"
-echo "Starting gateway on port ${OPENCLAW_GATEWAY_PORT}..."
 
-exec openclaw gateway --port "${OPENCLAW_GATEWAY_PORT}" --verbose
+echo "Running non-interactive onboard..."
+openclaw onboard --mode local --no-install-daemon || echo "(onboard exited non-zero, continuing)"
+
+echo "Starting gateway in foreground on port ${OPENCLAW_GATEWAY_PORT}..."
+exec openclaw --port "${OPENCLAW_GATEWAY_PORT}" --verbose
