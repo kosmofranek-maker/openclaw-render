@@ -27,7 +27,8 @@ cat > "${OPENCLAW_STATE_DIR}/openclaw.json" <<EOF
       "webhookUrl": "${RENDER_EXTERNAL_URL}/telegram-webhook",
       "webhookPath": "/telegram-webhook",
       "webhookHost": "0.0.0.0",
-      "webhookPort": ${OPENCLAW_GATEWAY_PORT}
+      "webhookPort": ${OPENCLAW_GATEWAY_PORT},
+      "webhookSecret": "${TELEGRAM_WEBHOOK_SECRET}"
     }
   }
 }
