@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: openclaw
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: OPENCLAW_MODEL
+        value: groq/llama-3.3-70b-versatile
+      - key: OPENCLAW_PROVIDER
+        value: groq
