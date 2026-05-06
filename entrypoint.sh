@@ -35,18 +35,18 @@ EOF
 
 echo "=== Generated openclaw.json (secrets redacted) ==="
 sed -e 's/"botToken": *"[^"]*"/"botToken": "***REDACTED***"/' \
-    -e 's/"token": *"[^"]*"/"token": "***REDACTED***"/' \
     "${OPENCLAW_STATE_DIR}/openclaw.json"
 echo "=================================================="
 echo "RENDER_EXTERNAL_URL=${RENDER_EXTERNAL_URL}"
 
 echo "=== openclaw --version ==="
 openclaw --version 2>&1 || true
-echo "=== openclaw --help ==="
-openclaw --help 2>&1 | head -80 || true
 
-echo "=== Running onboard with auto-yes ==="
-yes | openclaw onboard --mode local --no-install-daemon 2>&1 | head -100 || echo "(onboard exited non-zero, continuing)"
+echo "=== openclaw gateway --help ==="
+openclaw gateway --help 2>&1 | head -60 || true
 
-echo "=== Starting gateway in foreground on port ${OPENCLAW_GATEWAY_PORT} (bind=lan) ==="
-exec openclaw gateway --port "${OPENCLAW_GATEWAY_PORT}" --verbose
+echo "=== openclaw daemon --help ==="
+openclaw daemon --help 2>&1 | head -40 || true
+
+echo "=== Starting gateway in foreground on port ${OPENCLAW_GATEWAY_PORT} (bind=lan, allow-unconfigured) ==="
+exec openclaw gateway --port "${OPENCLAW_GATEWAY_PORT}" --allow-unconfigured --log-level debug
