@@ -14,4 +14,4 @@ COPY SOUL.md /app/SOUL.md
 ENV PORT=10000
 EXPOSE 10000
 
-CMD ["sh", "-c", "openclaw start --port ${PORT} --soul /app/SOUL.md"]
+CMD ["sh", "-c", "openclaw gateway --port ${PORT} --verbose"]
