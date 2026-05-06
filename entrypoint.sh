@@ -9,6 +9,11 @@ fi
 
 cat > "${OPENCLAW_STATE_DIR}/openclaw.json" <<EOF
 {
+  "gateway": {
+    "bind": "lan",
+    "port": ${OPENCLAW_GATEWAY_PORT},
+    "token": "${OPENCLAW_GATEWAY_TOKEN}"
+  },
   "agents": {
     "defaults": {
       "model": { "primary": "groq/llama-3.3-70b-versatile" },
@@ -28,20 +33,20 @@ cat > "${OPENCLAW_STATE_DIR}/openclaw.json" <<EOF
 }
 EOF
 
-echo "=== Generated openclaw.json (token redacted) ==="
-sed 's/"botToken": *"[^"]*"/"botToken": "***REDACTED***"/' "${OPENCLAW_STATE_DIR}/openclaw.json"
-echo "==============================================="
+echo "=== Generated openclaw.json (secrets redacted) ==="
+sed -e 's/"botToken": *"[^"]*"/"botToken": "***REDACTED***"/' \
+    -e 's/"token": *"[^"]*"/"token": "***REDACTED***"/' \
+    "${OPENCLAW_STATE_DIR}/openclaw.json"
+echo "=================================================="
 echo "RENDER_EXTERNAL_URL=${RENDER_EXTERNAL_URL}"
 
 echo "=== openclaw --version ==="
 openclaw --version 2>&1 || true
 echo "=== openclaw --help ==="
 openclaw --help 2>&1 | head -80 || true
-echo "=== openclaw onboard --help ==="
-openclaw onboard --help 2>&1 | head -60 || true
 
 echo "=== Running onboard with auto-yes ==="
 yes | openclaw onboard --mode local --no-install-daemon 2>&1 | head -100 || echo "(onboard exited non-zero, continuing)"
 
-echo "=== Starting gateway in foreground on port ${OPENCLAW_GATEWAY_PORT} ==="
+echo "=== Starting gateway in foreground on port ${OPENCLAW_GATEWAY_PORT} (bind=lan) ==="
 exec openclaw gateway --port "${OPENCLAW_GATEWAY_PORT}" --verbose

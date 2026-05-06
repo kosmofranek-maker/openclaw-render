@@ -13,6 +13,8 @@ services:
         sync: false
       - key: OPENCLAW_GATEWAY_PORT
         value: "10000"
+      - key: OPENCLAW_GATEWAY_TOKEN
+        generateValue: true
       - key: OPENCLAW_STATE_DIR
         value: /data/.openclaw
       - key: OPENCLAW_WORKSPACE_DIR
