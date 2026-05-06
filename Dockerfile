@@ -7,11 +7,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g openclaw
+RUN npm install -g openclaw@latest
 
-COPY SOUL.md /app/SOUL.md
+ENV OPENCLAW_STATE_DIR=/data/.openclaw
+ENV OPENCLAW_WORKSPACE_DIR=/data/workspace
+ENV OPENCLAW_GATEWAY_PORT=10000
+ENV OPENCLAW_LOG_LEVEL=debug
 
-ENV PORT=10000
 EXPOSE 10000
 
-CMD ["sh", "-c", "openclaw gateway --port ${PORT} --verbose"]
+CMD ["sh", "-c", "mkdir -p ${OPENCLAW_STATE_DIR} ${OPENCLAW_WORKSPACE_DIR} && openclaw gateway --port ${OPENCLAW_GATEWAY_PORT} --verbose"]

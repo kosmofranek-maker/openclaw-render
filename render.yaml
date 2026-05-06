@@ -5,13 +5,17 @@ services:
     plan: free
     region: frankfurt
     dockerfilePath: ./Dockerfile
-    healthCheckPath: /
+    healthCheckPath: /healthz
     envVars:
       - key: GROQ_API_KEY
         sync: false
       - key: TELEGRAM_BOT_TOKEN
         sync: false
-      - key: OPENCLAW_MODEL
-        value: groq/llama-3.3-70b-versatile
-      - key: OPENCLAW_PROVIDER
-        value: groq
+      - key: OPENCLAW_GATEWAY_PORT
+        value: "10000"
+      - key: OPENCLAW_STATE_DIR
+        value: /data/.openclaw
+      - key: OPENCLAW_WORKSPACE_DIR
+        value: /data/workspace
+      - key: OPENCLAW_LOG_LEVEL
+        value: debug
