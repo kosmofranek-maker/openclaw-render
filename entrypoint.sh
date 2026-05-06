@@ -48,5 +48,5 @@ openclaw gateway --help 2>&1 | head -60 || true
 echo "=== openclaw daemon --help ==="
 openclaw daemon --help 2>&1 | head -40 || true
 
-echo "=== Starting gateway in foreground on port ${OPENCLAW_GATEWAY_PORT} (bind=lan, allow-unconfigured) ==="
-exec openclaw gateway --port "${OPENCLAW_GATEWAY_PORT}" --allow-unconfigured --log-level debug
+echo "=== Starting gateway in foreground on port ${OPENCLAW_GATEWAY_PORT} (bind=lan) ==="
+exec openclaw gateway run --port "${OPENCLAW_GATEWAY_PORT}" --bind lan --verbose
