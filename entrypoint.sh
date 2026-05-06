@@ -10,9 +10,9 @@ fi
 cat > "${OPENCLAW_STATE_DIR}/openclaw.json" <<EOF
 {
   "gateway": {
+    "mode": "local",
     "bind": "lan",
-    "port": ${OPENCLAW_GATEWAY_PORT},
-    "token": "${OPENCLAW_GATEWAY_TOKEN}"
+    "port": ${OPENCLAW_GATEWAY_PORT}
   },
   "agents": {
     "defaults": {
